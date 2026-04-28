@@ -1,0 +1,81 @@
+name: brew test-bot
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  # --------------------------------------------------------------------------
+  # Cheap fan-in: tap-syntax-only check on Linux. Fails fast on style/audit
+  # issues before we burn macOS minutes on a full install.
+  # --------------------------------------------------------------------------
+  tap-syntax:
+    name: tap syntax
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Cache Homebrew bundler RubyGems
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
+
+      - name: Run brew test-bot --only-tap-syntax
+        run: brew test-bot --only-tap-syntax
+
+  # --------------------------------------------------------------------------
+  # Full install + test + audit, fanned out across the three OSes Homebrew
+  # officially supports. Only runs on PRs (not direct pushes to main) so we
+  # don't waste minutes on already-merged code.
+  # --------------------------------------------------------------------------
+  test-bot:
+    name: ${{ matrix.os }}
+    needs: tap-syntax
+    if: github.event_name == 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-14    # Apple Silicon
+          - macos-13    # Intel
+          - ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Cache Homebrew bundler RubyGems
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
+
+      - run: brew test-bot --only-cleanup-before
+
+      - run: brew test-bot --only-setup
+
+      - name: Run brew test-bot --only-formulae
+        run: brew test-bot --only-formulae
+
+      - name: Upload bottles
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bottles_${{ matrix.os }}
+          path: '*.bottle.*'
+          if-no-files-found: ignore
