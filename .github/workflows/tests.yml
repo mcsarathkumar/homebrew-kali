@@ -49,9 +49,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-14    # Apple Silicon
-          - macos-13    # Intel
-          - ubuntu-22.04
+          - macos-26 # Apple Silicon (Tahoe)
+          - macos-26-intel # Intel (Tahoe)
+          - ubuntu-24.04
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Homebrew
@@ -77,5 +77,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bottles_${{ matrix.os }}
-          path: '*.bottle.*'
+          path: "*.bottle.*"
           if-no-files-found: ignore
