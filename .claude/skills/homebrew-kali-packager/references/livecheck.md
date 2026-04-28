@@ -20,7 +20,7 @@ For these URL patterns, Homebrew has built-in strategies and `livecheck` is auto
 
 ## GitLab releases
 
-```ruby
+```rbex
 livecheck do
   url "https://gitlab.com/kalilinux/packages/<package>/-/releases"
   regex(/<package>[._-]v?(\d+(?:\.\d+)+)/i)
@@ -29,7 +29,7 @@ end
 
 Or use the GitLab API:
 
-```ruby
+```rbex
 livecheck do
   url "https://gitlab.com/api/v4/projects/<id>/releases"
   strategy :json do |json|
@@ -40,7 +40,7 @@ end
 
 ## Git tags (when no proper releases exist)
 
-```ruby
+```rbex
 livecheck do
   url :stable
   strategy :git
@@ -52,7 +52,7 @@ This scans `git ls-remote --tags` and pulls versions from tag names. Works for r
 
 ## Vendor download pages
 
-```ruby
+```rbex
 livecheck do
   url "https://example.com/downloads"
   regex(/href=.*?tool[._-]v?(\d+(?:\.\d+)+)\.tar\.gz/i)
@@ -70,7 +70,7 @@ If it doesn't return a sensible version, refine the regex.
 
 For formulae pinned to a specific commit with no version tracking:
 
-```ruby
+```rbex
 livecheck do
   skip "No upstream releases; pinned to a commit"
 end

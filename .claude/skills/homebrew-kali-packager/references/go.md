@@ -4,7 +4,7 @@ Use this for any tool whose upstream is a Go module (look for `go.mod` in the re
 
 ## Standard template
 
-```ruby
+```rbex
 class Gobuster < Formula
   desc "Directory/file, DNS and VHost busting tool written in Go"
   homepage "https://github.com/OJ/gobuster"
@@ -38,7 +38,7 @@ end
 
 If the project produces multiple binaries (e.g. `cmd/foo` and `cmd/bar`):
 
-```ruby
+```rbex
 def install
   ldflags = "-s -w"
   system "go", "build", *std_go_args(ldflags: ldflags, output: bin/"foo"), "./cmd/foo"
@@ -50,7 +50,7 @@ end
 
 If upstream uses `-ldflags "-X main.version=..."` to inject the version (very common):
 
-```ruby
+```rbex
 def install
   ldflags = %W[
     -s -w
@@ -67,7 +67,7 @@ Check upstream's `Makefile` or `goreleaser.yml` to find the exact ldflags they u
 
 Many Go CLIs use cobra and ship completions via `<cmd> completion bash|zsh|fish`. Generate and install them:
 
-```ruby
+```rbex
 def install
   system "go", "build", *std_go_args(ldflags: "-s -w")
   generate_completions_from_executable(bin/"gobuster", "completion")
@@ -77,14 +77,14 @@ end
 ## Test patterns
 
 Minimum acceptable:
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/gobuster version")
 end
 ```
 
 Better — exercise actual functionality with input that doesn't need network:
-```ruby
+```rbex
 test do
   # Should fail gracefully without a target
   output = shell_output("#{bin}/gobuster dir 2>&1", 1)

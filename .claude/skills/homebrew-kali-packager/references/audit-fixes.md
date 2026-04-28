@@ -37,12 +37,12 @@ If you have e.g. two versions of a tool, the older one goes in `tool@1.rb` with 
 Use exact SPDX strings: `MIT`, `Apache-2.0`, `GPL-3.0-only`, `GPL-3.0-or-later`, `BSD-3-Clause`. See https://spdx.org/licenses/.
 
 For dual licenses:
-```ruby
+```rbex
 license any_of: ["MIT", "Apache-2.0"]
 ```
 
 For all-of:
-```ruby
+```rbex
 license all_of: ["GPL-2.0-only", "Linux-syscall-note"]
 ```
 
@@ -50,13 +50,13 @@ license all_of: ["GPL-2.0-only", "Linux-syscall-note"]
 
 Don't use `releases/download/v.../source.tar.gz` for GitHub-generated source archives. Use the canonical archive URL:
 
-```ruby
+```rbex
 url "https://github.com/<owner>/<repo>/archive/refs/tags/v#{version}.tar.gz"
 ```
 
 ### `head should use the default branch`
 
-```ruby
+```rbex
 head "https://github.com/<owner>/<repo>.git", branch: "main"
 ```
 
@@ -80,14 +80,14 @@ Even better, use `on_macos` / `on_linux` / `on_arm` / `on_intel` blocks.
 Alphabetical. Build deps with `=> :build` before runtime deps:
 
 ❌
-```ruby
+```rbex
 depends_on "openssl@3"
 depends_on "cmake" => :build
 depends_on "libpcap"
 ```
 
 ✅
-```ruby
+```rbex
 depends_on "cmake" => :build
 depends_on "libpcap"
 depends_on "openssl@3"
@@ -98,14 +98,14 @@ depends_on "openssl@3"
 Don't just `system bin/"foo", "--version"`. Add an assertion:
 
 ❌
-```ruby
+```rbex
 test do
   system bin/"foo", "--version"
 end
 ```
 
 ✅
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/foo --version")
 end
@@ -118,7 +118,7 @@ end
 
 ### `URL should not include "latest"`
 
-```ruby
+```rbex
 # Bad: url "https://github.com/.../releases/latest/download/foo.tar.gz"
 # Good: url "https://github.com/.../archive/refs/tags/v#{version}.tar.gz"
 ```
@@ -130,7 +130,7 @@ Never. If a tool genuinely needs root at runtime (e.g. `nmap` with raw sockets),
 ### `Manpages should be installed`
 
 If upstream ships a manpage, install it:
-```ruby
+```rbex
 man1.install "docs/foo.1"
 # or for multiple:
 man1.install Dir["docs/*.1"]
@@ -139,7 +139,7 @@ man1.install Dir["docs/*.1"]
 ### `Custom version is required`
 
 If `brew create` couldn't infer the version from the URL, you must declare it:
-```ruby
+```rbex
 version "1.2.3"
 ```
 

@@ -31,7 +31,7 @@ Is the tool fundamentally tied to a Linux kernel feature?
 
 ### Strategy 1: `on_linux` for Linux-only deps
 
-```ruby
+```rbex
 on_linux do
   depends_on "libcap"
   depends_on "linux-headers"
@@ -44,7 +44,7 @@ If the tool builds without these on macOS (just losing some features), this is e
 
 If upstream supports `--disable-<feature>`:
 
-```ruby
+```rbex
 def install
   args = std_configure_args
   args << "--disable-cap" if OS.mac?
@@ -58,7 +58,7 @@ end
 
 Last resort. Add to the formula:
 
-```ruby
+```rbex
 # Skip Linux-specific code paths on macOS
 patch :DATA
 
@@ -116,7 +116,7 @@ For these, your response should be:
 
 When a port works but with reduced functionality, add a `caveats` block:
 
-```ruby
+```rbex
 def caveats
   <<~EOS
     Note: This tool was originally Linux-only. The macOS port has some limitations:

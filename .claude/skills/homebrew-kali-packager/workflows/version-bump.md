@@ -53,7 +53,7 @@ If it works, jump to step 6.
 
 For Python formulae (resources need updating), git-pinned formulae, or anything `bump-formula-pr` refuses:
 
-```ruby
+```rbex
 # In the formula, update:
 url "https://github.com/.../archive/refs/tags/v<NEW_VERSION>.tar.gz"
 sha256 "<new sha>"

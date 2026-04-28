@@ -17,7 +17,7 @@ If multiple are present, pick the one upstream documents in their build instruct
 
 ## Autotools
 
-```ruby
+```rbex
 class Hping3 < Formula
   desc "Active network smashing tool"
   homepage "https://www.hping.org/"
@@ -45,7 +45,7 @@ end
 
 For a real autotools project (configure.ac → autoreconf → configure):
 
-```ruby
+```rbex
 def install
   system "autoreconf", "--force", "--install", "--verbose"
   system "./configure", *std_configure_args
@@ -57,7 +57,7 @@ end
 
 ## CMake
 
-```ruby
+```rbex
 class Capstone < Formula
   desc "Multi-platform, multi-architecture disassembly framework"
   homepage "https://www.capstone-engine.org/"
@@ -82,13 +82,13 @@ end
 `std_cmake_args` expands to a sensible set including `-DCMAKE_INSTALL_PREFIX`, `-DCMAKE_BUILD_TYPE=Release`, etc. Don't override these unless you know why.
 
 For build options:
-```ruby
+```rbex
 system "cmake", "-S", ".", "-B", "build", *std_cmake_args, "-DBUILD_SHARED_LIBS=ON", "-DCAPSTONE_BUILD_TESTS=OFF"
 ```
 
 ## Plain Make
 
-```ruby
+```rbex
 class Hashcat < Formula
   desc "World's fastest and most advanced password recovery utility"
   homepage "https://hashcat.net/hashcat/"
@@ -110,7 +110,7 @@ Read the project's `Makefile` to find the right install target and prefix variab
 
 ## Meson
 
-```ruby
+```rbex
 def install
   system "meson", "setup", "build", *std_meson_args
   system "meson", "compile", "-C", "build", "--verbose"
@@ -152,7 +152,7 @@ Many security tools have Linux-specific code paths (raw sockets, netlink, /proc)
 
 ## Test patterns
 
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/<tool> --version")
 end
@@ -160,7 +160,7 @@ end
 
 For libraries, write a tiny C program in the test block:
 
-```ruby
+```rbex
 test do
   (testpath/"test.c").write <<~C
     #include <capstone/capstone.h>

@@ -4,7 +4,7 @@ Use this for Perl scripts and tools. Examples in Kali: `dnsenum`, `nikto`, `dirb
 
 ## Standard template (CPAN deps via resources)
 
-```ruby
+```rbex
 class Dnsenum < Formula
   desc "Multithreaded perl script to enumerate DNS information"
   homepage "https://github.com/SparrowOf/dnsenum"
@@ -69,7 +69,7 @@ You can also use `cpanm --look <Module>` locally to find dependencies and versio
 
 If the script only uses Perl core modules (`Getopt::Long`, `Socket`, etc.):
 
-```ruby
+```rbex
 def install
   bin.install "tool.pl" => "tool"
   # Make sure the shebang is right
@@ -81,7 +81,7 @@ For scripts using only system perl, don't even need `inreplace` — keep the `#!
 
 ## Test patterns
 
-```ruby
+```rbex
 test do
   output = shell_output("#{bin}/<tool> --help 2>&1", 0)  # or exit-code 1 if --help exits 1
   assert_match "<tool>", output

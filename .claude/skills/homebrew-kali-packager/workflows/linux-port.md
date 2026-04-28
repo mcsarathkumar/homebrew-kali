@@ -57,7 +57,7 @@ Once you know the build system and what to disable/patch, read the matching lang
 
 Always add a `caveats` block when the macOS port loses functionality:
 
-```ruby
+```rbex
 def caveats
   <<~EOS
     This tool was originally Linux-only. The macOS build has the following limitations:

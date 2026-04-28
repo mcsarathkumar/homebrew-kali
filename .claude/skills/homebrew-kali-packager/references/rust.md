@@ -4,7 +4,7 @@ Use this for any tool whose upstream is a Cargo project (look for `Cargo.toml`).
 
 ## Standard template
 
-```ruby
+```rbex
 class Feroxbuster < Formula
   desc "Fast, simple, recursive content discovery tool"
   homepage "https://github.com/epi052/feroxbuster"
@@ -37,7 +37,7 @@ end
 
 If the repo is a Cargo workspace and you need a specific package:
 
-```ruby
+```rbex
 def install
   system "cargo", "install", *std_cargo_args(path: "crates/cli")
 end
@@ -45,7 +45,7 @@ end
 
 Or to build a specific binary from a workspace:
 
-```ruby
+```rbex
 def install
   system "cargo", "install", *std_cargo_args, "--bin", "tool-cli"
 end
@@ -55,7 +55,7 @@ end
 
 Rust crates often link against OpenSSL via the `openssl-sys` crate. On macOS this usually works because Homebrew's openssl is on `PKG_CONFIG_PATH`, but you may need:
 
-```ruby
+```rbex
 depends_on "openssl@3"
 depends_on "pkgconf" => :build
 ```
@@ -64,7 +64,7 @@ For crates using `rustls` (pure-Rust TLS) you don't need OpenSSL. Check upstream
 
 ## Native libraries (libpcap, libgit2, etc.)
 
-```ruby
+```rbex
 depends_on "libgit2"
 # or
 depends_on "libpcap"
@@ -76,13 +76,13 @@ For libpcap on macOS, the system version usually works — only declare it as a 
 
 Many Rust CLIs use `clap` and emit completions via `--completions <shell>` or `--generate-completion <shell>`:
 
-```ruby
+```rbex
 generate_completions_from_executable(bin/"feroxbuster", "--completions")
 ```
 
 If upstream pre-generates completions in a `completions/` directory:
 
-```ruby
+```rbex
 bash_completion.install "completions/feroxbuster.bash"
 zsh_completion.install "completions/_feroxbuster"
 fish_completion.install "completions/feroxbuster.fish"
@@ -90,7 +90,7 @@ fish_completion.install "completions/feroxbuster.fish"
 
 ## Test patterns
 
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/feroxbuster --version")
   # Test that it fails gracefully without a target

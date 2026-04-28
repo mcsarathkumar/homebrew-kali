@@ -24,7 +24,7 @@ mcsarathkumar/homebrew-kali/
 
 ## Standard cask template (.dmg with .app)
 
-```ruby
+```rbex
 cask "burpsuite" do
   version "2025.10.1"
   sha256 "REPLACE_WITH_REAL_SHA256"
@@ -58,7 +58,7 @@ end
 
 ## Per-architecture downloads
 
-```ruby
+```rbex
 cask "ghidra" do
   arch arm: "arm64", intel: "x86_64"
 
@@ -79,7 +79,7 @@ end
 
 ## .pkg installers
 
-```ruby
+```rbex
 cask "tool-name" do
   version "1.2.3"
   sha256 "..."
@@ -100,7 +100,7 @@ end
 
 If upstream ships an `.app` that contains a CLI tool inside:
 
-```ruby
+```rbex
 app "Caido.app"
 binary "#{appdir}/Caido.app/Contents/MacOS/caido-cli", target: "caido"
 ```

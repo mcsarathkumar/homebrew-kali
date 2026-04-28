@@ -13,7 +13,7 @@ Use pattern 1 unless you have a specific reason not to.
 
 ## Standard template (pattern 1)
 
-```ruby
+```rbex
 class Theharvester < Formula
   include Language::Python::Virtualenv
 
@@ -77,7 +77,7 @@ Paste the resulting blocks into the formula. Then test with `brew install --buil
 
 Many Kali tools have no PyPI release. Pragmatic mode: pin to a commit SHA.
 
-```ruby
+```rbex
 class Bloodhound < Formula
   include Language::Python::Virtualenv
 
@@ -95,14 +95,14 @@ end
 
 For projects without tags but with stable `main`/`master`:
 
-```ruby
+```rbex
 url "https://github.com/example/tool.git",
     revision: "abc123def456..."
 version "0.1.0-20260101"  # YYYYMMDD of the commit
 ```
 
 Document this in a comment at the top of the formula:
-```ruby
+```rbex
 # Upstream has no releases; pinning to a commit on master.
 # Bump revision on a regular cadence and update version accordingly.
 ```
@@ -123,14 +123,14 @@ Document this in a comment at the top of the formula:
 ## Test patterns
 
 Minimum:
-```ruby
+```rbex
 test do
   system bin/"<tool>", "--help"
 end
 ```
 
 Better — actually exercise the tool against safe input:
-```ruby
+```rbex
 test do
   output = shell_output("#{bin}/dnsrecon -d example.com -t std 2>&1", 0)
   assert_match "example.com", output
@@ -138,7 +138,7 @@ end
 ```
 
 For tools that absolutely need a target/network, fall back to invalid input:
-```ruby
+```rbex
 test do
   # Should fail with helpful error, not crash
   output = shell_output("#{bin}/sqlmap -u 'http://invalid' --batch 2>&1", 1)

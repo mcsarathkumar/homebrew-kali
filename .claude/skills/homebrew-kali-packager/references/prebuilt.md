@@ -9,7 +9,7 @@ Use this when upstream ships precompiled macOS binaries (usually for Go, Rust, o
 
 ## Standard template
 
-```ruby
+```rbex
 class Caido < Formula
   desc "Lightweight web security auditing toolkit"
   homepage "https://caido.io/"
@@ -63,13 +63,13 @@ For Kali tools, almost everything is open source — this section is mostly abou
 
 Make sure the URL contains the version so `livecheck` can detect new releases. Bad:
 
-```ruby
+```rbex
 url "https://example.com/latest/tool-mac-arm64.tar.gz"  # no version, can't bump
 ```
 
 Good:
 
-```ruby
+```rbex
 url "https://example.com/v#{version}/tool-#{version}-mac-arm64.tar.gz"
 ```
 
@@ -82,7 +82,7 @@ macOS Gatekeeper will block unsigned binaries. **Do NOT** add `xattr -d com.appl
 
 ## Test pattern
 
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/<tool> --version")
 end

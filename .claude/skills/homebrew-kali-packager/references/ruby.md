@@ -4,7 +4,7 @@ Use this for Ruby gems and Ruby-based CLI tools. Examples in homebrew-core: `wps
 
 ## Standard template
 
-```ruby
+```rbex
 class Wpscan < Formula
   desc "Black box WordPress vulnerability scanner"
   homepage "https://wpscan.com/wordpress-security-scanner"
@@ -46,7 +46,7 @@ end
 
 For small tools that are just a single `.rb` file (not a proper gem), consider:
 
-```ruby
+```rbex
 def install
   libexec.install Dir["*"]
   (bin/"<tool>").write_env_script libexec/"<tool>.rb",
@@ -58,7 +58,7 @@ end
 
 If upstream uses `Gemfile`/`Gemfile.lock`:
 
-```ruby
+```rbex
 def install
   ENV["GEM_HOME"] = libexec
   ENV["BUNDLE_PATH"] = libexec
@@ -73,7 +73,7 @@ This is fiddlier — find a similar formula in homebrew-core (e.g. `wpscan`, `me
 
 ## Test patterns
 
-```ruby
+```rbex
 test do
   assert_match version.to_s, shell_output("#{bin}/<tool> --version")
 end
