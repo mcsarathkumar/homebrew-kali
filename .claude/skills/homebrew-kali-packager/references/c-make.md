@@ -143,7 +143,7 @@ Many security tools have Linux-specific code paths (raw sockets, netlink, /proc)
 1. **Conditional compile**: If upstream supports it, pass `--disable-<linux-feature>` or similar.
 2. **Patch**: For small fixes, use a `patch do ... end` block at end of formula. Always upstream the fix too.
 3. **`on_linux` block**: Some deps only apply on Linux:
-   ```ruby
+   ```rbex
    on_linux do
      depends_on "libcap"
    end
