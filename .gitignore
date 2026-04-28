@@ -1,0 +1,9 @@
+# Local-only artifacts
+.DS_Store
+*.tar.gz
+*.tar.bz2
+*.zip
+
+# Hidden working files used while developing formulae
+.seclists.tar.gz
+.scratch/
