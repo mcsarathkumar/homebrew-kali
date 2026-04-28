@@ -17,7 +17,8 @@ TAP_DIR_NAME="homebrew-${TAP_NAME}"
 # Resolve absolute path of this repo (the directory above the scripts/ dir).
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-if ! command -v brew >/dev/null 2>&1; then
+if ! command -v brew >/dev/null 2>&1
+then
   echo "error: brew not found on PATH. Install Homebrew first: https://brew.sh" >&2
   exit 1
 fi
@@ -29,7 +30,8 @@ mkdir -p "${TAPS_PARENT}"
 
 # If something already exists at TAP_LINK and it's not pointing at our repo,
 # warn rather than clobber it.
-if [[ -e "${TAP_LINK}" && ! -L "${TAP_LINK}" ]]; then
+if [[ -e "${TAP_LINK}" && ! -L "${TAP_LINK}" ]]
+then
   echo "error: ${TAP_LINK} already exists and is not a symlink." >&2
   echo "       Move it aside (e.g. brew untap ${TAP_USER}/${TAP_NAME}) and retry." >&2
   exit 1
