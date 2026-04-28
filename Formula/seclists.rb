@@ -21,7 +21,7 @@ class Seclists < Formula
     # Pre-extract the rockyou archives so users get a ready-to-use plain-text
     # wordlist alongside the originals. Keep the .tar.gz files in place since
     # downstream SecLists tooling and users may still expect them.
-    Dir[pkgshare/"Passwords/Leaked-Databases/rockyou*.txt.tar.gz"].each do |archive|
+    Dir[pkgshare / "Passwords/Leaked-Databases/rockyou*.txt.tar.gz"].each do |archive|
       system "tar", "-xzf", archive, "-C", File.dirname(archive)
     end
   end
@@ -42,14 +42,14 @@ class Seclists < Formula
 
   test do
     # A handful of well-known wordlists must be present after install.
-    assert_path_exists pkgshare/"Discovery/Web-Content/common.txt"
-    assert_path_exists pkgshare/"Passwords/Common-Credentials/xato-net-10-million-passwords-1000.txt"
-    assert_path_exists pkgshare/"Usernames/top-usernames-shortlist.txt"
+    assert_path_exists pkgshare / "Discovery/Web-Content/common.txt"
+    assert_path_exists pkgshare / "Passwords/Common-Credentials/xato-net-10-million-passwords-1000.txt"
+    assert_path_exists pkgshare / "Usernames/top-usernames-shortlist.txt"
 
     # rockyou.txt should be pre-extracted from its .tar.gz archive at install time.
-    assert_path_exists pkgshare/"Passwords/Leaked-Databases/rockyou.txt"
+    assert_path_exists pkgshare / "Passwords/Leaked-Databases/rockyou.txt"
 
     # Sanity-check that common.txt has plausible content.
-    assert_match(/admin/i, (pkgshare/"Discovery/Web-Content/common.txt").read)
+    assert_match(/admin/i, (pkgshare / "Discovery/Web-Content/common.txt").read)
   end
 end
